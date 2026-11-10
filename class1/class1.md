@@ -87,3 +87,10 @@ Then Run Two agent start
 # Promt Caching
 
 - https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
+
+skills means / which build in and we also make our command.
+
+# Skills
+
+https://claude.com/skills
