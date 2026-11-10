@@ -94,3 +94,5 @@ skills means / which build in and we also make our command.
 # Skills
 
 https://claude.com/skills
+
+create a skill which will ensure proper documentation of this project. if the documentation is not present, then it will create one otherwise it will update existing documentation when i run this skill
