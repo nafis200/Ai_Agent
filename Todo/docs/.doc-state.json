@@ -1,0 +1,14 @@
+{
+  "updatedAt": "2026-11-22T17:39:49.776Z",
+  "files": {
+    ".gitignore": "007bb2c38d6fca1d",
+    "app/globals.css": "40f8eb6c9767cd95",
+    "app/layout.tsx": "7a357d8e3be44cf4",
+    "app/page.tsx": "8528e899e6ba3625",
+    "components/FeedbackWidget.tsx": "9c1ae9d16b5ce45e",
+    "components/TodoApp.tsx": "df6940cbe6ee2c99",
+    "next.config.ts": "ab4c61f6ee100ae4",
+    "package.json": "689ac7ca20c96dc1",
+    "tsconfig.json": "f9231e4c2e6c7857"
+  }
+}

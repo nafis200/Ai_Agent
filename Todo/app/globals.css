@@ -1,0 +1,385 @@
+:root,
+[data-theme="dark"] {
+  --bg: #161a2b;
+  --bg-gradient: linear-gradient(180deg, #1b2033 0%, #12151f 100%);
+  --surface: #252a3d;
+  --border: #353b52;
+  --text: #e8eaf2;
+  --muted: #9aa0b4;
+  --accent: #6c5ce7;
+  --accent-hover: #7d6ff0;
+  --toggle-bg: #2d3348;
+}
+
+[data-theme="light"] {
+  --bg: #f4f5fa;
+  --bg-gradient: linear-gradient(180deg, #f7f8fc 0%, #eceef6 100%);
+  --surface: #ffffff;
+  --border: #dde0ea;
+  --text: #1d2133;
+  --muted: #6b7185;
+  --accent: #6c5ce7;
+  --accent-hover: #5a4ad6;
+  --toggle-bg: #e6e8f1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  background-image: var(--bg-gradient);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.container {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 40px 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.theme-toggle {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: var(--toggle-bg);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.add-input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+
+.add-input::placeholder {
+  color: var(--muted);
+}
+
+.add-input:focus {
+  border-color: var(--accent);
+}
+
+.add-btn {
+  padding: 0 18px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.add-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.add-btn:disabled {
+  opacity: 0.6;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.item-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.item-label input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.item-text {
+  overflow-wrap: anywhere;
+}
+
+.item.done .item-text {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.remove-btn {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.remove-btn:hover {
+  color: var(--text);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.clear-btn {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 0;
+}
+
+.clear-btn:hover:not(:disabled) {
+  color: var(--text);
+}
+
+.clear-btn:disabled {
+  opacity: 0.5;
+}
+
+/* ---------- Feedback widget ---------- */
+
+.feedback {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+  animation: feedback-in 0.15s ease-out;
+}
+
+@keyframes feedback-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.feedback-title {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.feedback-close {
+  border: none;
+  background: none;
+  padding: 0 4px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.feedback-close:hover {
+  color: var(--text);
+}
+
+.feedback-launcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.feedback-launcher:hover {
+  background: var(--accent-hover);
+  transform: scale(1.06);
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 4px 9px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--toggle-bg);
+  color: var(--text);
+  font-size: 11px;
+}
+
+.chip:hover {
+  border-color: var(--border);
+}
+
+.chip.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.stars {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--border);
+  transition: color 0.1s;
+}
+
+.star.filled {
+  color: #f5b301;
+}
+
+.feedback-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.feedback-input::placeholder {
+  color: var(--muted);
+}
+
+.feedback-input:focus {
+  border-color: var(--accent);
+}
+
+.feedback-textarea {
+  resize: vertical;
+  min-height: 64px;
+}
+
+.feedback-send {
+  padding: 9px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.feedback-send:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.feedback-send:disabled {
+  opacity: 0.45;
+}
+
+.feedback-thanks {
+  margin: 8px 0 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
