@@ -102,3 +102,13 @@ Claude.md file when ai give must be read and again and again feedback
 
 
 add a dont section and make sure this project never become backend and online database
+
+
+documentation or docs folder give high level overview of project. or birds of eye view
+
+# 2.3 Multi file Refectoring
+
+work two way
+
+# implicit (file dosent know claude)
+# explicit (file know)
