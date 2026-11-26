@@ -17,6 +17,7 @@ None.
 ```ts
 type Todo = { id: string; text: string; done: boolean };
 type Theme = "dark" | "light";
+const LEAVE_MS = 220; // must match the `item-out` animation duration in globals.css
 ```
 
 ### State
@@ -26,13 +27,15 @@ type Theme = "dark" | "light";
 | `todos` | `Todo[]` | `[]` | The list |
 | `text` | `string` | `""` | Value of the "What needs to be done?" input |
 | `theme` | `Theme` | `"dark"` | Current colour theme |
+| `leaving` | `Set<string>` | empty set | IDs of todos playing their exit animation |
 
 ### Behaviour
 
-- **Header:** the "📝 Todo" title and a round theme toggle button (🌙 in dark mode, ☀️ in light mode). The button's `aria-label` names the theme it will switch to.
+- **Header:** the "📝 Todo" title and a round theme toggle button (🌙 in dark mode, ☀️ in light mode). The button's `aria-label` names the theme it will switch to. The icon is wrapped in `<span className="theme-icon" key={theme}>`; changing the key remounts it, which replays its spin-in animation.
 - **Theme sync:** a `useEffect` sets `document.documentElement.dataset.theme` whenever `theme` changes.
 - **Add form:** the input has `autoFocus`. The Add button is disabled while the trimmed input is empty. `addTodo` calls `preventDefault`, trims the text, ignores empty values, appends the new todo with a `crypto.randomUUID()` id, and clears the input.
 - **List:** each `<li className="item">` gets the extra class `done` when completed. It contains a checkbox label (`toggleTodo`) and a `×` button (`removeTodo`) whose `aria-label` is `Delete "<text>"`.
+- **Animated removal:** `removeTodo` and `clearCompleted` both call `animateOut(ids)`. It adds the IDs to `leaving` (which gives each `<li>` the `leaving` class and starts the `item-out` animation), then after `LEAVE_MS` removes the todos from `todos` and the IDs from `leaving`.
 - **Footer:** shown only when there is at least one todo. It shows "N item(s) left" (with correct singular/plural) and a "Clear completed" button, which is disabled when nothing is done.
 
 ## `FeedbackWidget`
