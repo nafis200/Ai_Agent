@@ -9,6 +9,8 @@ const CATEGORIES = [
   { id: "other", label: "Other", icon: "💬" },
 ] as const;
 
+// github
+
 type Category = (typeof CATEGORIES)[number]["id"];
 
 type Feedback = {
