@@ -10,12 +10,16 @@ type Todo = {
 
 type Theme = "dark" | "light";
 
+// Must match the duration of the `item-out` animation in globals.css.
+const LEAVE_MS = 220;
+
 // All state lives in React memory only — no localStorage, no backend.
 // Refreshing the page resets the list.
 export default function TodoApp() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [text, setText] = useState("");
   const [theme, setTheme] = useState<Theme>("dark");
+  const [leaving, setLeaving] = useState<Set<string>>(() => new Set());
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -32,9 +36,23 @@ export default function TodoApp() {
   const toggleTodo = (id: string) =>
     setTodos((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
 
-  const removeTodo = (id: string) => setTodos((prev) => prev.filter((t) => t.id !== id));
+  // Mark items as leaving so they can play their exit animation, then remove them.
+  const animateOut = (ids: string[]) => {
+    if (ids.length === 0) return;
+    setLeaving((prev) => new Set([...prev, ...ids]));
+    setTimeout(() => {
+      setTodos((prev) => prev.filter((t) => !ids.includes(t.id)));
+      setLeaving((prev) => {
+        const next = new Set(prev);
+        ids.forEach((id) => next.delete(id));
+        return next;
+      });
+    }, LEAVE_MS);
+  };
 
-  const clearCompleted = () => setTodos((prev) => prev.filter((t) => !t.done));
+  const removeTodo = (id: string) => animateOut([id]);
+
+  const clearCompleted = () => animateOut(todos.filter((t) => t.done).map((t) => t.id));
 
   const itemsLeft = todos.filter((t) => !t.done).length;
   const hasCompleted = todos.some((t) => t.done);
@@ -49,7 +67,9 @@ export default function TodoApp() {
           onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
           aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
         >
-          {theme === "dark" ? "🌙" : "☀️"}
+          <span key={theme} className="theme-icon" aria-hidden>
+            {theme === "dark" ? "🌙" : "☀️"}
+          </span>
         </button>
       </header>
 
@@ -69,7 +89,10 @@ export default function TodoApp() {
 
       <ul className="list">
         {todos.map((todo) => (
-          <li key={todo.id} className={`item${todo.done ? " done" : ""}`}>
+          <li
+            key={todo.id}
+            className={`item${todo.done ? " done" : ""}${leaving.has(todo.id) ? " leaving" : ""}`}
+          >
             <label className="item-label">
               <input
                 type="checkbox"

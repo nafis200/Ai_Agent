@@ -56,6 +56,7 @@ button:disabled {
   max-width: 440px;
   margin: 0 auto;
   padding: 40px 16px;
+  animation: fade-up 0.45s ease-out both;
 }
 
 .header {
@@ -79,6 +80,21 @@ button:disabled {
   background: var(--toggle-bg);
   font-size: 15px;
   line-height: 1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
+.theme-icon {
+  display: inline-block;
+  animation: spin-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .add-form {
@@ -97,6 +113,7 @@ button:disabled {
   color: var(--text);
   font: inherit;
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .add-input::placeholder {
@@ -105,6 +122,7 @@ button:disabled {
 
 .add-input:focus {
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .add-btn {
@@ -114,10 +132,18 @@ button:disabled {
   background: var(--accent);
   color: #fff;
   font-weight: 600;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .add-btn:hover:not(:disabled) {
   background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.add-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.96);
+  box-shadow: none;
 }
 
 .add-btn:disabled {
@@ -141,6 +167,19 @@ button:disabled {
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--surface);
+  animation: item-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  transform: translateX(2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.item.leaving {
+  animation: item-out 0.22s ease-in forwards;
+  pointer-events: none;
 }
 
 .item-label {
@@ -158,15 +197,26 @@ button:disabled {
   margin: 0;
   accent-color: var(--accent);
   cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
+.item-label input:checked {
+  animation: check-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Strike-through is drawn as a background line so it can animate across the text. */
 .item-text {
   overflow-wrap: anywhere;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 55%;
+  background-size: 0% 1px;
+  transition: background-size 0.3s ease, color 0.3s ease;
 }
 
 .item.done .item-text {
-  text-decoration: line-through;
   color: var(--muted);
+  background-size: 100% 1px;
 }
 
 .remove-btn {
@@ -176,10 +226,12 @@ button:disabled {
   font-size: 18px;
   line-height: 1;
   padding: 0 4px;
+  transition: color 0.15s ease, transform 0.2s ease;
 }
 
 .remove-btn:hover {
-  color: var(--text);
+  color: #e5484d;
+  transform: rotate(90deg) scale(1.2);
 }
 
 .footer {
@@ -189,6 +241,7 @@ button:disabled {
   margin-top: 16px;
   color: var(--muted);
   font-size: 12px;
+  animation: fade-up 0.3s ease-out both;
 }
 
 .clear-btn {
@@ -197,6 +250,7 @@ button:disabled {
   color: var(--muted);
   font-size: 12px;
   padding: 0;
+  transition: color 0.15s ease, opacity 0.2s ease;
 }
 
 .clear-btn:hover:not(:disabled) {
@@ -221,17 +275,18 @@ button:disabled {
   background: var(--surface);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   z-index: 10;
-  animation: feedback-in 0.15s ease-out;
+  transform-origin: bottom right;
+  animation: feedback-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes feedback-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -258,10 +313,12 @@ button:disabled {
   color: var(--muted);
   font-size: 18px;
   line-height: 1;
+  transition: color 0.15s ease, transform 0.2s ease;
 }
 
 .feedback-close:hover {
   color: var(--text);
+  transform: rotate(90deg);
 }
 
 .feedback-launcher {
@@ -278,12 +335,17 @@ button:disabled {
   line-height: 1;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   z-index: 10;
-  transition: transform 0.15s, background 0.15s;
+  transition: transform 0.2s ease, background 0.15s;
+  animation: launcher-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), pulse 2.4s ease-out 0.6s 3;
 }
 
 .feedback-launcher:hover {
   background: var(--accent-hover);
-  transform: scale(1.06);
+  transform: scale(1.1) rotate(-8deg);
+}
+
+.feedback-launcher:active {
+  transform: scale(0.94);
 }
 
 .feedback-form {
@@ -305,6 +367,11 @@ button:disabled {
   background: var(--toggle-bg);
   color: var(--text);
   font-size: 11px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.chip:active {
+  transform: scale(0.94);
 }
 
 .chip:hover {
@@ -328,11 +395,19 @@ button:disabled {
   font-size: 20px;
   line-height: 1;
   color: var(--border);
-  transition: color 0.1s;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.star:hover {
+  transform: scale(1.25);
 }
 
 .star.filled {
   color: #f5b301;
+}
+
+.star[aria-pressed="true"] {
+  animation: check-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .feedback-input {
@@ -345,6 +420,7 @@ button:disabled {
   font: inherit;
   font-size: 12px;
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .feedback-input::placeholder {
@@ -353,6 +429,7 @@ button:disabled {
 
 .feedback-input:focus {
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .feedback-textarea {
@@ -368,10 +445,15 @@ button:disabled {
   color: #fff;
   font-size: 12px;
   font-weight: 600;
+  transition: background 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
 }
 
 .feedback-send:hover:not(:disabled) {
   background: var(--accent-hover);
+}
+
+.feedback-send:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .feedback-send:disabled {
@@ -382,4 +464,101 @@ button:disabled {
   margin: 8px 0 4px;
   color: var(--muted);
   font-size: 13px;
+  animation: thanks-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes item-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes item-out {
+  to {
+    opacity: 0;
+    transform: translateX(40px) scale(0.95);
+  }
+}
+
+@keyframes check-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes spin-in {
+  from {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes launcher-in {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 0 16px transparent;
+  }
+}
+
+@keyframes thanks-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
