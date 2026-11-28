@@ -1,0 +1,4 @@
+# Python tooling for the documentation site (not used by the app).
+# Install: python3 -m venv .venv && .venv/bin/pip install -r docs/requirements.txt
+mkdocs==1.6.1
+mkdocs-material==9.8.2

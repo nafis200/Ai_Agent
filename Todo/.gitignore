@@ -2,3 +2,11 @@ node_modules
 .next
 next-env.d.ts
 *.tsbuildinfo
+
+# Claude Code personal settings and hook output
+.claude/settings.local.json
+.claude/hooks/prompt-log.txt
+
+# MkDocs documentation site
+.venv/
+site/

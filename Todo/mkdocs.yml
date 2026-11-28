@@ -1,0 +1,74 @@
+site_name: Todo
+site_description: Documentation for the Todo app (Next.js 15, React 19, TypeScript).
+site_url: https://nafis200.github.io/Ai_Agent/
+repo_url: https://github.com/nafis200/Ai_Agent
+repo_name: Ai_Agent
+edit_uri: edit/main/Todo/docs/
+
+docs_dir: docs
+site_dir: site
+
+# Files in docs/ that are not pages and must not be published.
+# (Dotfiles such as .doc-state.json are already excluded by MkDocs.)
+exclude_docs: |
+  requirements.txt
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Architecture: architecture.md
+  - Components: components.md
+  - Styling: styling.md
+  - Changelog: changelog.md
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.instant
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.action.edit
+  palette:
+    # Follow the OS preference until the reader picks a theme.
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to system preference
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+
+validation:
+  links:
+    not_found: warn
+    anchors: warn
